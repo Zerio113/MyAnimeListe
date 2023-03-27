@@ -21,7 +21,7 @@ async function LastOneAnimes(url, LastOne){
     
             const template = `
                                 <div class="col mb-4">
-                                    <a href="templates/infoanime.html?id=${info.id}">
+                                    <a href="infoanime.php?id=${info.id}">
                                         <div class="card card-animation">
                                         <img src="${info.image}" class="card-img-top" alt="${info.title}">
                                         <div class="card-body">

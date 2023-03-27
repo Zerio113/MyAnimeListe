@@ -20,22 +20,21 @@ async function Recherche(url, Recherche){
             title: result.title,
             id: result.mal_id,
             genres: result.genres
-
         };
         const genres = info.genres.map((genre) => genre.name).join(" ");
-    
+
         const template = `
-                            <div class="col mb-4" data-category="${genres}">
-                                <a href="infoanime.html?id=${info.id}">
-                                    <div class="card card-animation">
-                                    <img src="${info.image}" class="card-img-top" alt="${info.title}">
-                                    <div class="card-body">
-                                        <h5 class="card-title">${info.title}</h5>
-                                    </div>
-                                    </div>
-                                </a>
-                            </div>
-                        `;
+      <div class="col mb-4" data-category="${genres}">
+        <a href="infoanime.php?id=${info.id}">
+          <div class="card card-animation">
+            <img src="${info.image}" class="card-img-top" alt="${info.title}">
+            <div class="card-body">
+              <h5 class="card-title">${info.title}</h5>
+            </div>
+          </div>
+        </a>
+      </div>
+    `;
         
         Recherche.innerHTML += template;
 

@@ -8,7 +8,7 @@ if(localStorage.getItem("favoris")){
     savedDate.forEach((fav) => {
 
         const template = `  
-                            <a href="infoanime.html?id=${fav.id}" class="list-group-item list-group-item-action d-flex">
+                            <a href="infoanime.php?id=${fav.id}" class="list-group-item list-group-item-action d-flex">
                                 <div class="d-flex align-items-center">
                                     <img src="${fav.image}"  alt="Image" height="80" width="50">
                                 </div>

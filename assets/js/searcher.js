@@ -6,9 +6,9 @@ form.addEventListener("submit",(e)=>{
     const Recherche = document.querySelector("input").value;
 
     if(window.location.href.split("/").includes("templates")){
-        window.location.href = `Recherche.html?value=${Recherche}`;
+        window.location.href = `Recherche.php?value=${Recherche}`;
     }
     else{
-        window.location.href = `templates/Recherche.html?value=${Recherche}`;
+        window.location.href = `Recherche.php?value=${Recherche}`;
     }
 })

@@ -20,7 +20,7 @@ async function topAnime(url, listTop){
         };
 
         const template = `
-                            <a href="infoanime.html?id=${info.id}" class="list-group-item list-group-item-action d-flex">
+                            <a href="infoanime.php?id=${info.id}" class="list-group-item list-group-item-action d-flex">
                                 <div class="d-flex align-items-center">
                                     <img src="${info.image}"  alt="">
                                 </div>
