@@ -15,10 +15,12 @@ async function upcommingAnime(url, upcommingList) {
         const info = {
             title: anime.title,
             image: anime.images.jpg.small_image_url,
+            id: anime.mal_id
+            
         };
 
         const template = `
-                            <a href="#" class="list-group-item list-group-item-action d-flex">
+                            <a href="infoanime.php?id=${info.id}" class="list-group-item list-group-item-action d-flex">
                                 <div class="d-flex align-items-center">
                                     <img src="${info.image}"  alt="">
                                 </div>

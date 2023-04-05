@@ -8,10 +8,10 @@ app.use(express.json());
 
 // Création de la connexion à la base de données
 const connection = mysql.createConnection({
-  host: 'mysql-myanimelist.alwaysdata.net',
-  user: '306030',
-  password: 'Lakdou123',
-  database: 'myanimelist_all'
+  host: 'mysql-lakdou.alwaysdata.net',
+  user: 'lakdou',
+  password: 'Uv*!rp5p6-i.gHY',
+  database: 'lakdou_lakdar'
 });
 
 // Vérification de la connexion à la base de données
@@ -24,28 +24,48 @@ connection.connect((err) => {
 });
 
 // Route pour ajouter un favori à la base de données
+// Route pour ajouter un favori à la base de données
 app.post('/favorites', (req, res) => {
   const { title, image, id, email } = req.body;
 
-  const query = `INSERT INTO favorites (title, image, anime_id, email) VALUES (?, ?, ?, ?)`;
-  const values = [title, image, id, email];
+  // Vérifier si le favori existe déjà dans la base de données
+  const selectQuery = `SELECT * FROM favorites WHERE anime_id = ? AND email = ?`;
+  const selectValues = [id, email];
 
-  connection.query(query, values, (err, result) => {
+  connection.query(selectQuery, selectValues, (err, result) => {
     if (err) {
-      console.error('Erreur lors de l\'insertion du favori :', err);
-      res.status(500).send('Erreur lors de l\'insertion du favori.');
+      console.error('Erreur lors de la vérification du favori :', err);
+      res.status(500).send('Erreur lors de la vérification du favori.');
     } else {
-      console.log('Favori ajouté à la base de données !');
-      res.status(200).send('Favori ajouté à la base de données.');
+      // Si le favori existe déjà, renvoyer un message à l'utilisateur
+      if (result.length > 0) {
+        console.log('Le favori est déjà présent dans la base de données !');
+        res.status(200).send('Le favori est déjà présent dans la base de données.');
+      } else {
+        // Sinon, ajouter le favori à la base de données
+        const insertQuery = `INSERT INTO favorites (title, image, anime_id, email) VALUES (?, ?, ?, ?)`;
+        const insertValues = [title, image, id, email];
+
+        connection.query(insertQuery, insertValues, (err, result) => {
+          if (err) {
+            console.error('Erreur lors de l\'insertion du favori :', err);
+            res.status(500).send('Erreur lors de l\'insertion du favori.');
+          } else {
+            console.log('Favori ajouté à la base de données !');
+            res.status(200).send('Favori ajouté à la base de données.');
+          }
+        });
+      }
     }
   });
 });
 
-// Route pour supprimer un favori de la base de données
-app.delete('/favorites/:id', (req, res) => {
-  const id = req.params.id;
 
-  const query = `DELETE FROM favorites WHERE anime_id = ${id}`;
+// Route pour supprimer un favori de la base de données
+app.delete('/favorites/:id/:email', (req, res) => {
+  const id = req.params.id;
+  const email = req.params.email;
+  const query = `DELETE FROM favorites WHERE anime_id = ${id} AND email = '${email}'`;
  
   connection.query(query, (err, result) => {
     if (err) {

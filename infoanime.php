@@ -87,62 +87,10 @@ if(isset($_SESSION['email']) && !empty($_SESSION['email'])) {
 <!-- ----------------------------------------  Script  ---------------------------------------- -->
     <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-fQybjgWLrvvRgtW6bFlB7jaZrFsaBXjsOMm/tB9LTS58ONXgqbR9W8oWht/amnpF" crossorigin="anonymous"></script>
-    <script>
-
-const image = document.getElementById("imageBig");
-const infoAnime = document.getElementById("infoAnime");
-
-let urlA = window.location.href;
-let idA = urlA.split("=")[1];
-
-urlID = `https://api.jikan.moe/v4/anime/${idA}`;
-
-async function info(url, image, infoAnime) {
-  const response = await fetch(url);
-  const data = await response.json();
-
-  const template = `  
-    <h1>${data.data.title}</h1>
-    <p>${data.data.synopsis}</p>
-    <div class="favori">
-      <span>Ajouter aux Favoris &nbsp;&nbsp; </span>
-      <i class="fa-solid fa-heart fav"></i>
-    </div>
-  `;
-
-  infoAnime.innerHTML = template;
-
-  const templateImg = `
-    <img src="${data.data.images.jpg.large_image_url}" alt="">
-  `;
-
-  image.innerHTML = templateImg;
-
-  const fav = document.querySelector(".favori");
-
-  fav.addEventListener("click", () => {
-  const title = document.querySelector("h1").innerHTML;
-  const image = document.querySelector("img").src;
-  const requestOptions = {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json'
-    },
-    body: JSON.stringify({ id: idA, title, image, email: userEmail })
-  };
-
-  fetch('http://localhost:4000/favorites', requestOptions)
-    .then(response => response.json())
-    .then(data => console.log(data))
-    .catch(error => console.error(error));
-      
-  });
-}
-
-info(urlID, image, infoAnime);
-    </script>
+    
     <script src="assets/js/searcher.js"></script>
     <script type="module" src="app.mjs"></script>
+    <script src="assets/js/info.js"></script>
 
     <script src="https://kit.fontawesome.com/790443b1d9.js" crossorigin="anonymous"></script>
 <!-- ----------------------------------------  Script  ---------------------------------------- -->

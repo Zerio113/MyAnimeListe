@@ -39,8 +39,10 @@ if(isset($_SESSION['email']) && !empty($_SESSION['email'])) {
             </button>
     
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                
-               
+            <form class="form-inline my-2 my-lg-0" id="search-form">
+            <a href="favorisuser.html" class="btn btn-outline-success my-2 my-sm-0">Rechercher les favoris d'un utilisateur ici !</a>
+</form>
+
                 <ul class="navbar-nav ml-auto"> <!-- ml-auto -->
                     <li class="nav-item active">
                         <a class="nav-link" href="deconnexion.php">Déconnexion <span class="sr-only">(current)</span></a>
@@ -152,7 +154,7 @@ fetch(`http://localhost:4000/favorites/${userEmail}`)
             <p class="text-success mb-2">${favorite.title}</p>
           </div>
         </a>
-        <button class="del btn btn-danger" id="${favorite.anime_id}" style="margin: auto;text-align: center;margin-top: 10px;" onClick="supprimerFavori(${favorite.anime_id})">Supprimer</button>
+        <button class="del btn btn-danger" id="${favorite.anime_id}" style="margin: auto;text-align: center;margin-top: 10px;" onClick="supprimerFavori('${favorite.anime_id}', '${favorite.email}')">Supprimer</button>
       `;
 
         // Ajouter le contenu HTML au <div>
@@ -171,27 +173,34 @@ fetch(`http://localhost:4000/favorites/${userEmail}`)
 
 
 // Fonction pour supprimer un favori
-function supprimerFavori(animeId) {
-  fetch(`http://localhost:4000/favorites/${animeId}`, { method: 'DELETE' })
-    .then((response) => response.text())
-    .then((data) => {
-      console.log(data);
-      // Recharger la page après la suppression
-      window.location.reload();
-    })
-    .catch((error) => console.error(error));
-}
-
-// Boucle pour ajouter un écouteur d'événements à chaque bouton de suppression
-const deleteButtons = document.querySelectorAll('.del');
-deleteButtons.forEach((button) => {
-  button.addEventListener('click', () => {
-    const animeId = button.id;
-    supprimerFavori(animeId);
+function supprimerFavori(animeId, userEmail) {
+    fetch(`http://localhost:4000/favorites/${animeId}/${userEmail}`, { method: 'DELETE' })
+      .then((response) => response.text())
+      .then((data) => {
+        console.log(data);
+        // Recharger la page après la suppression
+        window.location.reload();
+      })
+      .catch((error) => console.error(error));
+  }
+  
+  // Boucle pour ajouter un écouteur d'événements à chaque bouton de suppression
+  const deleteButtons = document.querySelectorAll('.del');
+  deleteButtons.forEach((button) => {
+    button.addEventListener('click', () => {
+      const animeId = button.id;
+      supprimerFavori(animeId);
+    });
   });
-});
 </script>
-
+<script>
+  function rechercherUtilisateur() {
+  const recherche = document.getElementById('search-input').value;
+  if (recherche) {
+    window.location.href = `favorisuser.html?utilisateur=${recherche}`;
+  }
+}
+  </script>
 
 <!-- ----------------------------------------  Footer  ---------------------------------------- -->
     <footer class="mt-3 p-4 bg-dark text-center text-white">
@@ -205,7 +214,6 @@ deleteButtons.forEach((button) => {
     <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-fQybjgWLrvvRgtW6bFlB7jaZrFsaBXjsOMm/tB9LTS58ONXgqbR9W8oWht/amnpF" crossorigin="anonymous"></script>
     
-    <script type="module" src="app.mjs"></script>
 
 <!-- ----------------------------------------  Script  ---------------------------------------- -->
 

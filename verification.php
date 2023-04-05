@@ -4,10 +4,10 @@ session_start(); // démarrer la session
 if(isset($_POST['email']) && isset($_POST['mdp']))
 {
  // connexion à la base de données
- $db_username = '306030';
- $db_password = 'Lakdou123';
- $db_name = 'myanimelist_all';
- $db_host = 'mysql-myanimelist.alwaysdata.net';
+ $db_username = 'lakdou';
+ $db_password = 'Uv*!rp5p6-i.gHY';
+ $db_name = 'lakdou_lakdar';
+ $db_host = 'mysql-lakdou.alwaysdata.net';
  $db = mysqli_connect($db_host, $db_username, $db_password,$db_name)
  or die('could not connect to database');
  

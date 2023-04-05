@@ -1,3 +1,4 @@
+
 const image = document.getElementById("imageBig");
 const infoAnime = document.getElementById("infoAnime");
 
@@ -13,10 +14,13 @@ async function info(url, image, infoAnime) {
   const template = `  
     <h1>${data.data.title}</h1>
     <p>${data.data.synopsis}</p>
-    <div class="favori">
-      <span>Ajouter aux Favoris &nbsp;&nbsp; </span>
-      <i class="fa-solid fa-heart fav"></i>
-    </div>
+    <a href="favoris.php">
+  <div class="favori">
+    <span>Ajouter aux Favoris &nbsp;&nbsp;</span>
+    <i class="fa-solid fa-heart fav"></i>
+  </div>
+</a>
+
   `;
 
   infoAnime.innerHTML = template;
@@ -30,21 +34,21 @@ async function info(url, image, infoAnime) {
   const fav = document.querySelector(".favori");
 
   fav.addEventListener("click", () => {
-    const title = document.querySelector("h1").innerHTML;
-    const image = document.querySelector("img").src;
+  const title = document.querySelector("h1").innerHTML;
+  const image = document.querySelector("img").src;
+  const requestOptions = {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({ id: idA, title, image, email: userEmail })
+  };
 
-    const requestOptions = {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({ id: idA, title, image })
-    };
-
-    fetch('http://localhost:4000/favorites', requestOptions)
-      .then(response => response.json())
-      .then(data => console.log(data))
-      .catch(error => console.error(error));
+  fetch('http://localhost:4000/favorites', requestOptions)
+    .then(response => response.json())
+    .then(data => console.log(data))
+    .catch(error => console.error(error));
+      
   });
 }
 
