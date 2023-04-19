@@ -15,7 +15,12 @@ if(isset($_SESSION['email']) && !empty($_SESSION['email'])) {
 <!doctype html>
 <html lang="en">
   <head>
-
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Anton&display=swap" rel="stylesheet">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Anton&display=swap" rel="stylesheet">
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <title>My anime list</title>
@@ -32,9 +37,9 @@ if(isset($_SESSION['email']) && !empty($_SESSION['email'])) {
 
 <!-- ---------------------------------------- navbar ---------------------------------------- -->
 
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+<nav class="navbar navbar-expand-lg navbar-dark bg-info">
         <div class="container">
-            <a class="navbar-brand text-success" href="indexuser.php">My anime list</a>
+        <a class="navbar-brand text-white" href="index.php" style="font-family: 'Anton', sans-serif;font-size: 25px; letter-spacing: 1px; text-shadow: 1px 1px 2px #000000; color: #FFC300;">MyAnimeList</a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
@@ -42,7 +47,7 @@ if(isset($_SESSION['email']) && !empty($_SESSION['email'])) {
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav ml-auto">
                 <li class="nav-item active">
-                    <a class="nav-link" href="indexuser.php">Accueil <span class="sr-only">(current)</span></a>
+                    <a class="nav-link" href="index.php">Accueil <span class="sr-only">(current)</span></a>
                 </li>
                 <li class="nav-item mr-4">
                     <a class="nav-link" href="favoris.php">Favoris</a>
@@ -51,7 +56,7 @@ if(isset($_SESSION['email']) && !empty($_SESSION['email'])) {
                 </ul>
                 <form class="form-inline my-2 my-lg-0">
                 <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
-                <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Rechercher</button>
+                <button class="btn btn-primary my-2 my-sm-0" type="submit">Rechercher</button>
                 <ul class="navbar-nav ml-auto">
                   
                   <li class="nav-item mr-4">
@@ -106,14 +111,14 @@ if(isset($_SESSION['email']) && !empty($_SESSION['email'])) {
         <div class="col-md-3">
             <aside >
                 <ul class="list-group" id="user">
-                    <li class="list-group-item list-group-item-success">Mon compte</li>
+                <li class="list-group-item" style="background-color: #ADD8E6;">Mon compte</li>
                     
                 </ul>
                 <ul class="list-group mt-4" id="favolist">
-                    <li class="list-group-item list-group-item-success">Favoris</li>
+                <li class="list-group-item" style="background-color: #ADD8E6;">Favoris</li>
                 </ul>
             </aside>
-        </div>
+        </div> 
 <!-- ---------------------------------------- Left row  ---------------------------------------- -->        
 <!-- ---------------------------------------- +++++++++ ---------------------------------------- -->        
 <!-- ---------------------------------------- Right row ---------------------------------------- -->

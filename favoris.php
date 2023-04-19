@@ -13,7 +13,12 @@ if(isset($_SESSION['email']) && !empty($_SESSION['email'])) {
 <!doctype html>
 <html lang="en">
   <head>
-
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Anton&display=swap" rel="stylesheet">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Delicious+Handrawn&display=swap" rel="stylesheet">
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <title>My anime list</title>
@@ -31,16 +36,16 @@ if(isset($_SESSION['email']) && !empty($_SESSION['email'])) {
 
 
 <!-- ---------------------------------------- navbar ---------------------------------------- -->
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+<nav class="navbar navbar-expand-lg navbar-dark bg-info">
         <div class="container">
-            <a class="navbar-brand text-success" href="indexuser.php">My anime list</a>
+        <a class="navbar-brand text-white" href="index.php" style="font-family: 'Anton', sans-serif;font-size: 25px; letter-spacing: 1px; text-shadow: 1px 1px 2px #000000; color: #FFC300;">MyAnimeList</a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
     
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <form class="form-inline my-2 my-lg-0" id="search-form">
-            <a href="favorisuser.html" class="btn btn-outline-success my-2 my-sm-0">Rechercher les favoris d'un utilisateur ici !</a>
+            <a href="favorisuser.html" class="btn btn-secondary my-2 my-sm-0">Rechercher les favoris d'un utilisateur ici !</a>
 </form>
 
                 <ul class="navbar-nav ml-auto"> <!-- ml-auto -->
@@ -97,7 +102,7 @@ if(isset($_SESSION['email']) && !empty($_SESSION['email'])) {
         <div class="col-md-3">
             <aside >
                 <ul class="list-group" id="user">
-                    <li class="list-group-item list-group-item-success text-center">Mon compte</li>
+                <li class="list-group-item" style="background-color: #ADD8E6;">Mon compte</li>
                         <superbutton><img src="https://picsum.photos/800"></superbutton>
                 </ul>
             </aside>
@@ -106,19 +111,14 @@ if(isset($_SESSION['email']) && !empty($_SESSION['email'])) {
 <!-- ---------------------------------------- +++++++++ ---------------------------------------- -->        
 <!-- ---------------------------------------- Right row ---------------------------------------- -->         
 <div class="col-md-9">
-    <h2 class="mt-4">Favoris :</h2>    
+<h2 class="mt-4" style ="font-family: 'Delicious Handrawn', cursive;">Favoris :</h2>
     <div class="container mt-5" id="favoris" style="border-top-left-radius: 1rem">
       <h1 class="text-center"></h1>
       <div class="row row-cols-1 row-cols-md-4 mt-4" >
       </div>
     </div>
   
-    <h2 class="mt-4">Watchlist :</h2>
-    <div class="container mt-5" id="info">
-      <h1 class="text-center"></h1>
-      <div class="row row-cols-1 row-cols-md-4 mt-4" id="watchlist">
-      </div>
-    </div>
+    
   
     <!-- Ajouter le script ici -->
 
@@ -136,35 +136,42 @@ fetch(`http://localhost:4000/favorites/${userEmail}`)
     // Vider le contenu actuel de l'élément
     favoritesContainer.innerHTML = '';
 
+    // Créer une rangée pour afficher les cartes en colonne
+    const favoritesRow = document.createElement('div');
+    favoritesRow.classList.add('row');
+
     // Parcourir chaque favori et générer du HTML pour l'afficher
     data.forEach(favorite => {
       // Créer un élément HTML de type <div> pour chaque favori
       const favoriteDiv = document.createElement('div');
 
       // Ajouter une classe CSS pour le style
-      favoriteDiv.classList.add('col');
+      favoriteDiv.classList.add('col-12', 'col-md-6', 'col-lg-4');
 
       // Générer le contenu HTML à afficher dans le <div>
       const favoriteContent = `
-        <a href="infoanime.php?id=${favorite.anime_id}" class="list-group-item list-group-item-action d-flex">
-          <div class="d-flex align-items-center">
-            <img src="${favorite.image}" alt="Image" height="80" width="50">
+        <div class="card mb-4 box-shadow">
+          <img class="card-img-top" src="${favorite.image}" alt="Image">
+          <div class="card-body p-2">
+            <h6 class="card-title mb-1">${favorite.title}</h6>
+            </a>
+            <button class="btn btn-primary btn-sm d-block text-center my-2" id="${favorite.anime_id}" onClick="supprimerFavori('${favorite.anime_id}', '${favorite.email}')">Supprimer</button>
           </div>
-          <div class="pl-3">
-            <p class="text-success mb-2">${favorite.title}</p>
-          </div>
-        </a>
-        <button class="del btn btn-danger" id="${favorite.anime_id}" style="margin: auto;text-align: center;margin-top: 10px;" onClick="supprimerFavori('${favorite.anime_id}', '${favorite.email}')">Supprimer</button>
+        </div>
       `;
 
-        // Ajouter le contenu HTML au <div>
-        favoriteDiv.innerHTML = favoriteContent;
+      // Ajouter le contenu HTML au <div>
+      favoriteDiv.innerHTML = favoriteContent;
 
-        // Ajouter le <div> à l'élément HTML où afficher les favoris
-        favoritesContainer.appendChild(favoriteDiv);
-      });
-    })
-    .catch(error => console.error('Erreur lors de la récupération des favoris :', error));
+      // Ajouter le <div> à la rangée
+      favoritesRow.appendChild(favoriteDiv);
+    });
+
+    // Ajouter la rangée à l'élément HTML où afficher les favoris
+    favoritesContainer.appendChild(favoritesRow);
+  })
+  .catch(error => console.error('Erreur lors de la récupération des favoris :', error));
+
 </script>
 
   

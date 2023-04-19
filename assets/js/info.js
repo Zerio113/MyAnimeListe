@@ -12,7 +12,7 @@ async function info(url, image, infoAnime) {
   const data = await response.json();
 
   const template = `  
-    <h1>${data.data.title}</h1>
+    <h1 style="font-family: 'Delicious Handrawn', cursive;">${data.data.title}</h1>
     <p>${data.data.synopsis}</p>
     <a href="favoris.php">
   <div class="favori">

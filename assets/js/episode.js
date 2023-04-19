@@ -14,11 +14,15 @@ async function episodes(url, grid) {
             const info = {
                 image: episode.entry.images.jpg.image_url,
                 titre: episode.entry.title,
-                episodes: episode.episodes[0].mal_id
+                episodes: episode.episodes[0].mal_id,
+                id: episode.entry.mal_id
+
             };
     
             const template = `
+
                                 <div class="col mb-4">
+                                <a href="infoanime.php?id=${info.id}">
                                     <div class="card">
                                     <img src="${info.image}" class="card-img-top img-card-chapitre" alt="${info.titre}">
                                     <div class="card-body">
@@ -26,6 +30,7 @@ async function episodes(url, grid) {
                                         <h5 class="card-title">${info.titre}</h5>
                                     </div>
                                     </div>
+                                    </a>
                                 </div>
                             `;
     

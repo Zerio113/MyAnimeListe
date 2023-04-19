@@ -11,7 +11,7 @@ const connection = mysql.createConnection({
   host: 'mysql-lakdou.alwaysdata.net',
   user: 'lakdou',
   password: 'Uv*!rp5p6-i.gHY',
-  database: 'lakdou_lakdar'
+  database: 'lakdou_test'
 });
 
 // Vérification de la connexion à la base de données
@@ -23,7 +23,7 @@ connection.connect((err) => {
   }
 });
 
-// Route pour ajouter un favori à la base de données
+
 // Route pour ajouter un favori à la base de données
 app.post('/favorites', (req, res) => {
   const { title, image, id, email } = req.body;
@@ -97,6 +97,31 @@ app.get('/favorites/:email', (req, res) => {
     }
   });
 });
+
+
+app.post('/inscription', (req, res) => {
+  const { name, surname, email, mdp } = req.body;
+
+  // Vérification des données envoyées dans la requête
+  if (!name || !surname || !email || !mdp) {
+    return res.status(400).send({ error: 'Tous les champs sont obligatoires' });
+  }
+
+  // Sinon, ajouter le favori à la base de données
+  const insertQuery = `INSERT INTO utilisateurs (name, surname, email, mdp) VALUES (?, ?, ?, ?)`;
+  const insertValues = [name, surname, email, mdp];
+
+  connection.query(insertQuery, insertValues, (err, result) => {
+    if (err) {
+      console.error('Erreur lors de l\'inscription :', err);
+    } else {
+      console.log('Utilisateur ajouté à la base de données !');
+      // Rediriger vers la page de connexion après l'inscription réussie
+      return res.redirect('/animelist/login.php');
+    }
+  });
+});
+
 
 
 // Lancement du serveur

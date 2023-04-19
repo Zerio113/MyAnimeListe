@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en"> 
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta name="author" content="Yinka Enoch Adedokun">
+    <link id="theme-style" rel="stylesheet" href="assets/css/login.css">
+	<title>Login Page</title>
+</head>
+<body>
+  
+    <div class="login-page">     
+      
+        <div class="form">
+            <form id="inscription-form">
+            <input type="text" placeholder="name" id="name" required/>
+            <input type="text" placeholder="surname" id="surname" required/>
+            <input type="text" placeholder="email" id="email" required/>
+            <input type="password" placeholder="mdp" id="mdp" required/>
+
+            <input type="submit" id="submit" value="LOGIN" >
+           
+            </form>
+            
+            <div id="message"></div>
+            <a href="login.php">
+              <button type="submit">Page de connection</button>
+            </a>
+        </div>
+       
+      </div>
+      </form>
+      </body>
+
+<script>
+const form = document.querySelector("#inscription-form");
+const message = document.querySelector("#message");
+
+form.addEventListener("submit", (event) => {
+  event.preventDefault();
+
+  const name = document.querySelector("#name").value;
+  const surname = document.querySelector("#surname").value;
+  const email = document.querySelector("#email").value;
+  const mdp = document.querySelector("#mdp").value;
+
+  if (!name || !surname || !email || !mdp) {
+    message.innerHTML = "Tous les champs sont obligatoires";
+    return;
+  }
+
+  // Validation de l'adresse e-mail et du mot de passe (Optionnel)
+
+  const requestOptions = {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({ name, surname, email, mdp })
+  };
+
+  fetch('http://localhost:4000/inscription', requestOptions)
+    .then(response => response.json())
+    .then(data => {
+      if (data.error) {
+        message.innerHTML = data.error;
+      } else {
+        message.innerHTML = "Inscription réussie";
+      }
+    })
+    .catch(error => console.error(error));
+});
+</script>
+</html>
